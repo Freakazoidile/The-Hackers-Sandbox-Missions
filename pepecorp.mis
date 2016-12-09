@@ -79,3 +79,16 @@ function intro()
   print ""
 
 end
+
+
+function ending()
+  print ""
+  print ""
+  print "--------------------------------------------------------------------------------"
+  print ""
+  print ""
+  print "Congrats.... for now"
+  print ""
+  pause()
+  quit()
+end
