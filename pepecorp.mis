@@ -1,0 +1,81 @@
+--Pepe Corp. Mission Package
+--Written by Freakazoidile and Sikula
+--
+
+--globals
+username = ''
+
+--load Hank Urchiff's PC
+newVM("HankUrchiff-PC")
+setProperty ({ ip = "10.40.1.242" })
+addUser ("h.urchiff", "urchiff1975")
+addFile ({ name = "/etc/passwd", content = "h.urchiff:".. hash("urchiff1975") ..":100:100:Hank Urchiff:/home/h.urchiff:/bin/sh\n" })
+addFile ({ name = "/bin/hashcat", exec="p_hashcat", acl="777" })
+mail ({ to="h.urchiff@HankUrchiff-PC", from="p.furniture", subject="Can you please..", body="Hey Hank, I need you to telnet into my computer to enter the data to the database\n. I forget which password I'm currently using but this is my list of hashes\njust use your special cat tool:\n\n".. hash("pattyIsAwesome").. "\n".. hash("p4tty12345") .."\nyu4NAm8Pd9+FIyG4SDBa\n\nMy Current IP is: 10.40.1.243\n\nThanks,\nPatty O'Furniture" })
+
+
+--load Patty O'Furniture's PC
+newVM("PattyO'Furniture-PC")
+setProperty ({ ip = "10.40.1.243" })
+addUser("p.furniture", "p4tty12345")
+addFile ({ name = "/etc/passwd", content = "p.furniture:".. hash("p4tty12345") ..":100:100:Patty O'Furniture:/home/p.furniture:/bin/sh\n" })
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+
+
+--load Al Cahol's PC
+--newVM("AlCahol-PC")
+--addUser("a.cahol")
+
+
+--load Harry Buns' PC
+--newVM("HarryBuns-PC")
+--addUser("h.buns")
+
+
+
+
+--functions 
+
+function intro()
+  if not _G["VERSION"] or VERSION < 1.15 then
+    print "You must use Hacker's Sandbox >= 1.15 to play this mission pack!"
+    quit()
+  end
+  print ""
+  print ""
+  print ""
+  print "--------------------------------------------------------------------------------"
+  print ""
+  print "Hey, you ready?"
+  decision = input()
+  if (user ~= "yes" or user ~= "ya" or user ~= "Yes" or user ~= "Ya" or user ~= "sure" or user ~= "Sure") then
+    print "Doesn't matter, what should we call you?"
+  else 
+    print "Great, What should we call you?"
+  end  
+  username = input()
+  print("Ok,"  .. username .. ", in NULL BL4D3 everyone's got their role.")
+  print "And today's your big day. We have successfully evaded Pepe Corps firewall and IDS systems."
+  print "Now comes your expertise, moving laterally through the company to get to the sysadmins, and eventually the board of directors."
+  print ""
+  print "We managed to plant a reverse shell onto a lowly data entry clerk's PC named Hank Urchiff."
+  print "All users at Pepe Corp have a login of FirstInitial.LastName Example:  Hank Urchiff's login is h.urchiff"
+  print "Turns out Hank really can't resist emails about cats. "
+  print ""
+  print "Through our reconnaisence we've gathered the following information on Hank that should help you figure out his password."
+  print "- He is really proud of his last name Urchiff"
+  print "- He was born in 1975"
+  print "- As mentioned, he really likes cats"
+  print ""
+  print "His password is likely a combination of one or more of these points of interest."
+  print ""
+  print "Alot of users email sensitive documents and information to each other at Pepe Corp. So careless. Anyways,"
+  print "Good luck on your mission, if you get stuck just try harder."
+  print ""
+  print ""
+  pause()
+  print "--------------------------------------------------------------------------------"
+  print ""
+  print ""
+
+end
