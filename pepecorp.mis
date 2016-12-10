@@ -2,51 +2,11 @@
 --Written by Freakazoidile and Sikula
 --
 
---globals
-username = ''
-
---load Hank Urchiff's PC
-newVM("HankUrchiff-PC")
-setProperty ({ ip = "10.40.1.242" })
-addUser ("h.urchiff", "urchiff1975")
-addFile ({ name = "/etc/passwd", content = "h.urchiff:".. hash("urchiff1975") ..":100:100:Hank Urchiff:/home/h.urchiff:/bin/sh\n" })
-addFile ({ name = "/bin/hashcat", exec="p_hashcat", acl="777" })
-mail ({ to="h.urchiff@HankUrchiff-PC", from="p.furniture", subject="Can you please..", body="Hey Hank, I need you to telnet into my computer to enter the data to the database\n. I forget which password I'm currently using but this is my list of hashes\njust use your special cat tool:\n\n".. hash("pattyIsAwesome").. "\n".. hash("p4tty12345") .."\nyu4NAm8Pd9+FIyG4SDBa\n\nMy Current IP is: 10.40.1.243\n\nThanks,\nPatty O'Furniture" })
+--global
 
 
---load Patty O'Furniture's PC
-newVM("PattyO'Furniture-PC")
-setProperty ({ ip = "10.40.1.243" })
-addUser("p.furniture", "p4tty12345")
-addFile ({ name = "/etc/passwd", content = "p.furniture:".. hash("p4tty12345") ..":100:100:Patty O'Furniture:/home/p.furniture:/bin/sh\n" })
-addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
-
-
---load Al Cahol's PC
---newVM("AlCahol-PC")
---addUser("a.cahol")
-
-
---load Harry Buns' PC
---newVM("HarryBuns-PC")
---addUser("h.buns")
-
-
-
-
---functions 
-
-function intro()
-  if not _G["VERSION"] or VERSION < 1.15 then
-    print "You must use Hacker's Sandbox >= 1.15 to play this mission pack!"
-    quit()
-  end
-  print ""
-  print ""
-  print ""
-  print "--------------------------------------------------------------------------------"
-  print ""
-  print "Hey, you ready?"
+--define username
+print "\n\n\n\nHey, you ready?"
   decision = input()
   if (user ~= "yes" or user ~= "ya" or user ~= "Yes" or user ~= "Ya" or user ~= "sure" or user ~= "Sure") then
     print "Doesn't matter, what should we call you?"
@@ -54,7 +14,76 @@ function intro()
     print "Great, What should we call you?"
   end  
   username = input()
-  print("Ok,"  .. username .. ", in NULL BL4D3 everyone's got their role.")
+--  
+
+
+--load Hank Urchiff's PC
+newVM("HankUrchiff-PC")
+setProperty ({ ip = "10.40.1.242", hint = "There is a program with 'cat' in the name that can help to solve hashes.  Don't forget to check the mail."})
+addUser ("h.urchiff", "urchiff1975")
+addFile ({ name = "/etc/passwd", content = "h.urchiff:".. hash("urchiff1975") ..":100:100:Hank Urchiff:/home/h.urchiff:/bin/sh\n" })
+addFile ({ name = "/bin/hashcat", exec="p_hashcat", acl="777" })
+mail ({ to="h.urchiff@HankUrchiff-PC", from="p.furniture", subject="Can you please..", body="Hey Hank, I need you to telnet into my computer to enter the data to the data in my home file into the database\n. I forget which password I'm currently using but this is my list of hashes\njust use your special cat tool:\n\n".. hash("pattyIsAwesome").. "\n".. hash("p4tty12345") .."\nyu4NAm8Pd9+FIyG4SDBa\n\nMy Current IP is: 10.40.1.243\n\nThanks,\nPatty O'Furniture" })
+
+
+--load Patty O'Furniture's PC
+newVM("PattyO'Furniture-PC")
+setProperty ({ ip = "10.40.1.243" })
+addUser("p.furniture", "p4tty12345")
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addFile ({ name = "/etc/passwd", content = "p.furniture:".. hash("p4tty12345") ..":100:100:Patty O'Furniture:/home/p.furniture:/bin/sh\n" })
+addFile ({ name = "/home/p.furniture/Q4Y2016results.doc", content = "Quarter 4 Fiscal Year 2016 Results\n---------------------------------------------------\nRevenue:		8.04Mil\n  Revenue from Sales:   7.05Mil\n  Sale of Assets:       0.99Mil\nCost of Revenue: 	4.26Mil\n---------------------------------------------------\nNet Revenue:		3.78Mil\n" })
+addFile ({ name = "/home/p.furniture/Q1Y2017results.doc", content = "Quarter 4 Fiscal Year 2016 Results\n---------------------------------------------------\nRevenue:	  	10.12Mil\n  Revenue from Sales:   9.25Mil\n  Sale of Assets:       0.87Mil\nCost of Revenue: 	5.32Mil\n---------------------------------------------------\nNet Revenue:		4.8Mil\n" })
+addFile ({ name = "/home/p.furniture/poems.txt", content= "Hey " .. username .. ", We're glad you made it this far. Keep on going.\n\nPut another password in,\nBomb it out and try again.\nTry to get past logging in,\nWe're hacking, hacking, hacking.\n" })
+mail ({ to="p.furniture@PattyO'Furniture-PC", from="a.cahol", subject="FTP server up", body="Hey Patty, I've got our team's FTP server up and running on my machine.  \nThe ip is 10.40.1.221.\nUsername: ftp\nI'm not going to just hand you the password though. As you know I always like telling stories so sit down and read this.\nAs you know during my time in the army I was a pilot, I flew Lockheed C-130 Hercules. \nThese things are flying whales with very high performance take off and landings capabilties for their size, as well as the a main work horse for transportating people and equipment.\nOn my first ever delpoyment I was in South Africa, it was a mostly a training mission for the South African Air Force.\nOne night me and lads when out drinking, my particular choice that evening was Whiskey.  After  couple hours we got really friendly with some local and decided to do some cliff diving.\nAt this point I wasn't in the mind set to make the best decisions and ended up catching my ankle on a ledge as a flipped off the cliff.\nI managed to get out of the water and went to the hospital for an Xray. The local Zulu people offered to drive me back to base.\nThat how I earned my letters WXZ. All in all it was a fun time!\nCheers, Al\n" })
+
+
+--load Al Cahol's PC    
+newVM("AlCahol-PC")
+setProperty ({ ip = "10.40.1.221", on_login="Good work " .. username .. " good work, we have been monitoring your progress.\nWe've been researching the accounts of people your getting into\n and it looks like things will start getting challenging.\nWe know you can do it, just stick to your guns.\n"})
+addUser ("ftp", "WhiskeyXrayZulu")
+addUser ("a.cahol", "VodkaUniformYankee")
+addService ({ port = "21", name = "superftpd", exec = "", start="true", poll="Super FTP Server Ready" })
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addFile ({ name = "/home/ftp/just-our-secret.txt", content="Sometimes I get a little tipsy after drinking whiskey and vodka!\nI end up really dizzy and start spinning, last time i rotated 13 times before falling!!\n"})
+addFile ({ name = "/home/ftp/pwds.txt", content= "a.cahol: IbqxnHavsbezLnaxrr\nftp: JuvfxrlKenlMhyh\n"})
+addFile ({ name = "/home/a.cahol/portscan", content = garbage(1623).."\n", exec="p_portscan", acl="777" })
+mail ({ to="a.cahol@AlCahol-PC", from="h.buns", subject="New Puzzle!", body="Hey Al,\nI know how much you like puzzles so I've encoded the password for the webserver\nand a list of possible IP's the webserver might be located on.\nPassword: 20-08-05-13-15-15-14-09-19-06-21-12-12\n\nIP's:\n10.40.1.40\n10.40.1.45\n10.40.1.50\n" })
+
+
+--load Harry Buns' PC
+newVM("HarryBuns-PC")
+setProperty ({ ip = "10.40.1.50" })
+addUser ("web", "themoonisfull")
+addUser ("h.buns", "")
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addService ({ port = "80", name = "httpd", exec = "", start="true", poll="Apache Web Server" })
+addService ({ port = "443", name = "httpd", exec = "", start="true", poll="Apache Web Server OpenSSL. User 'web'" })
+
+
+--load Dummy 1
+newVM("dummy1")
+setProperty ({ ip = "10.40.1.40" })
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addService ({ port = "445", name = "httpd", exec = "", start="true", poll="MS NetBios" })
+addService ({ port = "666", name = "DOOM", exec = "", start="true", poll="Would you like to play game?" })
+
+
+--load Dummy 2
+newVM("dummy2")
+setProperty ({ ip = "10.40.1.45" })
+addService ({ port = "22", name = "sshd", exec = "", start="true", poll="OpenSSH" })
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addService ({ port = "3306", name = "mysql", exec = "", start="true", poll="MySQL" })
+
+
+--functions 
+function intro()
+  if not _G["VERSION"] or VERSION < 1.18 then
+    print "You must use Hacker's Sandbox >= 1.18 to play this mission pack! (Just to play it safe)"
+    quit()
+  end
+  print("Ok, "  .. username .. ", in NULL BL4D3 everyone's got their role.")
   print "And today's your big day. We have successfully evaded Pepe Corps firewall and IDS systems."
   print "Now comes your expertise, moving laterally through the company to get to the sysadmins, and eventually the board of directors."
   print ""
@@ -77,7 +106,6 @@ function intro()
   print "--------------------------------------------------------------------------------"
   print ""
   print ""
-
 end
 
 
