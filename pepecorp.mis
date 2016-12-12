@@ -35,7 +35,7 @@ addFile ({ name = "/etc/passwd", content = "p.furniture:".. hash("p4tty12345") .
 addFile ({ name = "/home/p.furniture/Q4Y2016results.doc", content = "Quarter 4 Fiscal Year 2016 Results\n---------------------------------------------------\nRevenue:		8.04Mil\n  Revenue from Sales:   7.05Mil\n  Sale of Assets:       0.99Mil\nCost of Revenue: 	4.26Mil\n---------------------------------------------------\nNet Revenue:		3.78Mil\n" })
 addFile ({ name = "/home/p.furniture/Q1Y2017results.doc", content = "Quarter 4 Fiscal Year 2016 Results\n---------------------------------------------------\nRevenue:	  	10.12Mil\n  Revenue from Sales:   9.25Mil\n  Sale of Assets:       0.87Mil\nCost of Revenue: 	5.32Mil\n---------------------------------------------------\nNet Revenue:		4.8Mil\n" })
 addFile ({ name = "/home/p.furniture/poems.txt", content= "Hey " .. username .. ", We're glad you made it this far. Keep on going.\n\nPut another password in,\nBomb it out and try again.\nTry to get past logging in,\nWe're hacking, hacking, hacking.\n" })
-mail ({ to="p.furniture@PattyO'Furniture-PC", from="a.cahol", subject="FTP server up", body="Hey Patty, I've got our team's FTP server up and running on my machine.  \nThe ip is 10.40.1.221.\nUsername: ftp\nI'm not going to just hand you the password though. As you know I always like telling stories so sit down and read this.\nAs you know during my time in the army I was a pilot, I flew Lockheed C-130 Hercules. \nThese things are flying whales with very high performance take off and landings capabilties for their size, as well as the a main work horse for transportating people and equipment.\nOn my first ever delpoyment I was in South Africa, it was a mostly a training mission for the South African Air Force.\nOne night me and lads when out drinking, my particular choice that evening was Whiskey.  After  couple hours we got really friendly with some local and decided to do some cliff diving.\nAt this point I wasn't in the mind set to make the best decisions and ended up catching my ankle on a ledge as a flipped off the cliff.\nI managed to get out of the water and went to the hospital for an Xray. The local Zulu people offered to drive me back to base.\nThat how I earned my letters WXZ. All in all it was a fun time!\nCheers, Al\n" })
+mail ({ to="p.furniture@PattyO'Furniture-PC", from="a.cahol", subject="FTP server up", body="Hey Patty, I've got our team's FTP server up and running on my machine.\nThe ip is 10.40.1.221.\nUsername: ftp\nI'm not going to just hand you the password though. As you know I always like telling stories so sit down and read this.\nAs you know during my time in the army I was a pilot, I flew Lockheed C-130 Hercules. \nThese things are flying whales with very high performance take off and landings capabilties for their size, as well as the a main work horse for transportating people and equipment.\nOn my first ever delpoyment I was in South Africa, it was a mostly a training mission for the South African Air Force.\nOne night me and lads when out drinking, my particular choice that evening was Whiskey.  After  couple hours we got really friendly with some local and decided to do some cliff diving.\nAt this point I wasn't in the mind set to make the best decisions and ended up catching my ankle on a ledge as a flipped off the cliff.\nI managed to get out of the water and went to the hospital for an Xray. The local Zulu people offered to drive me back to base.\nThat how I earned my letters WXZ. All in all it was a fun time!\nCheers, Al\nTeam Lead Data Entry" })
 
 
 --load Al Cahol's PC    
@@ -48,17 +48,27 @@ addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Logi
 addFile ({ name = "/home/ftp/just-our-secret.txt", content="Sometimes I get a little tipsy after drinking whiskey and vodka!\nI end up really dizzy and start spinning, last time i rotated 13 times before falling!!\n"})
 addFile ({ name = "/home/ftp/pwds.txt", content= "a.cahol: IbqxnHavsbezLnaxrr\nftp: JuvfxrlKenlMhyh\n"})
 addFile ({ name = "/home/a.cahol/portscan", content = garbage(1623).."\n", exec="p_portscan", acl="777" })
-mail ({ to="a.cahol@AlCahol-PC", from="h.buns", subject="New Puzzle!", body="Hey Al,\nI know how much you like puzzles so I've encoded the password for the webserver\nand a list of possible IP's the webserver might be located on.\nPassword: 20-08-05-13-15-15-14-09-19-06-21-12-12\n\nIP's:\n10.40.1.40\n10.40.1.45\n10.40.1.50\n" })
+mail ({ to="a.cahol@AlCahol-PC", from="h.buns", subject="New Puzzle!", body="Hey Al,\nI know how much you like puzzles so I've encoded the password for the webserver\nand a list of possible IP's the webserver might be located on.\nPassword: 20-08-05-13-15-15-14-09-19-06-21-12-12\n\nIP's:\n10.40.1.40\n10.40.1.45\n10.40.1.50\n\nRegards,\nHarry Buns\nDirector of Data Entry at Pepe Corporation" })
 
 
 --load Harry Buns' PC
 newVM("HarryBuns-PC")
 setProperty ({ ip = "10.40.1.50" })
 addUser ("web", "themoonisfull")
-addUser ("h.buns", "")
+addUser ("h.buns", "Bacon_Cheeseburger")
 addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
 addService ({ port = "80", name = "httpd", exec = "", start="true", poll="Apache Web Server" })
 addService ({ port = "443", name = "httpd", exec = "", start="true", poll="Apache Web Server OpenSSL. User 'web'" })
+addFile ({ name = "/etc/passwd", content = "h.buns:*:0:0:Harry Buns:/home/h.buns/:/bin/sh\nweb:*:100:100:web:/home/web:/bin/sh\n" })
+addDir ({ name = "/var/" })
+addDir ({ name = "/var/www/" })
+addDir ({ name ="/var/www/tools/" })
+addFile ({ name = "/var/www/index.html", content = "<html>\n<body>\n<H1>Welcome! Web Server Installation Successfully Completed!</H1>\n</body>\n</html>\n" })
+addFile ({ name = "/var/www/login.html", content = "<html>\n<body>\n<H1>Welcome! Please enter username and password</H1>\n<form>\nUsername\n<input='text' name='username'>\nPassword:\n<input='text' name='password'>\n<input type='submit' value='Submit'></form>\n</body>\n</html>\n" })
+addFile ({ name = "/var/www/tools/bruteforcer", content = garbage(944).."\n", exec="f_bruteforcer", acl="777" })
+addFile ({ name = "/bin/wget", exec="f_wget", acl="777" })
+mail ({ to="h.buns@HarryBuns-PC", from="m.smith", subject="First Quarter 2017 results!", body="Hello everyone,\nGreat work this past quarter, our revenue grew from past quarter by 25%, our cost of revenue growth did not exceed our revenue growth, which puts us at One entire year of remaining at the same or greater profit margin.\nNet revenue grew 27% to 4.8 Million.\nCongratulations to all the directors for once again leading their team through a successful quarter.\nKeep up the good working moving forward!\n\nSincerely,\nMikeike Smith\nChief Executive Office" })
+mail ({ to="h.buns@HarryBuns-PC", from="b.drinkwater", subject="Re: Password Generator", body="Hi Harry,\nI typically use a script I wrote to generate passwords for all members of our admin team, our systems and for new users. \nThe random passwords are just more secure,and usually people are lazy and pick easy to guess passwords.  You can use the wget command in your /bin/ directory download the script.\nThe script is hosted on my computer at: 10.40.1.110/passwordGen\nRegards,\nBill Drinkwater\nSystem Administrator\nSent from MS Outlook workstation BillDrinkwater-PC"})
 
 
 --load Dummy 1
@@ -75,6 +85,21 @@ setProperty ({ ip = "10.40.1.45" })
 addService ({ port = "22", name = "sshd", exec = "", start="true", poll="OpenSSH" })
 addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
 addService ({ port = "3306", name = "mysql", exec = "", start="true", poll="MySQL" })
+
+
+--load Bill Drink WatersPC
+newVM("BillDrinkwater-PC")
+setProperty ({ ip = "10.40.1.110" })
+addUser ("b.drinkwater", "7b93e57034037db559c542f4fa1cde7a")
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
+addService ({ port = "80", name = "telnetd", exec = "", start="true", poll="Login:" })
+addFile ({ name = "/home/b.drinkwater/here.txt", content = "Thats it for now.\n", acl="777" })
+
+--load Mike Smith's PC
+newVM("MikeSmith-PC")
+setProperty ({ ip = "10.40.1.10" })
+addUser ("m.smith", "ceo")
+
 
 
 --functions 
@@ -108,6 +133,52 @@ function intro()
   print ""
 end
 
+function f_bruteforcer(arg)
+  if (#arg < 2) then
+    print ("usage: bruteforcer [hostname|address]")
+    return
+  end
+  host = arg[2]
+  print "Simple Bruteforce Login Cracker by Dead_Beat"
+  print ""
+  echo ("Username to bruteforce: ")
+  user = input()
+  print "Creating multiple connections."
+  print "Attacking..."
+  sleep(3)
+  if (user == "h.buns") then
+    if (host == "HarryBuns-PC" or host == "10.40.1.50") then
+      print "Password Cracked"
+      print "Password for user 'h.buns' is 'Bacon_Cheeseburger'"
+    else
+      print "No passwords found."
+    end
+  end
+end
+
+function f_wget(arg)
+  if (#arg < 2) then
+    print "wget: missing URL"
+    print "usage: wget [URL]"
+    return
+  end
+  host = arg[2]
+  print ("Connecting to " .. host .. "... connected.")
+  if (host == "10.40.1.110/passwordGen") then
+    path = cwd()
+    print ("Saving files to " .. path .. "...")
+    echo (" filedownload: ")
+    for i = 1,4 do
+      echo (".")
+      sleep(1)
+    end
+    echo ("\n")
+    addFile ({ name = path.."passwordGen", content ="#!/bin/bash\n\nif [ -z $\"1\" ]\n  then\n    echo \"No hostname specified. Usage: passwordGen [hostname]\"\n    exit 1\n  fi\n\necho Password for $1 is:\necho $1 | md5sum | awk '{ print $1 }'\n", acl="777" })
+    print ("done.")
+    return
+  end
+  print ("ERROR 404: Not Found.\n")
+end
 
 function ending()
   print ""
