@@ -57,7 +57,7 @@ setProperty ({ ip = "10.40.1.50" })
 addUser ("web", "themoonisfull")
 addUser ("h.buns", "Bacon_Cheeseburger")
 addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
-addService ({ port = "80", name = "httpd", exec = "", start="true", poll="Apache Web Server." })
+addService ({ port = "80", name = "http", exec = "", start="true", poll="Apache Web Server." })
 addService ({ port = "443", name = "https", exec = "", start="true", poll="Apache Web Server OpenSSL. User 'web'" })
 addFile ({ name = "/etc/passwd", content = "h.buns:*:0:0:Harry Buns:/home/h.buns/:/bin/sh\nweb:*:100:100:web:/home/web:/bin/sh\n" })
 addDir ({ name = "/var/" })
@@ -67,15 +67,15 @@ addFile ({ name = "/var/www/index.html", content = "<html>\n<body>\n<H1>Welcome!
 addFile ({ name = "/var/www/login.html", content = "<html>\n<body>\n<H1>Welcome! Please enter username and password</H1>\n<form>\nUsername\n<input='text' name='username'>\nPassword:\n<input='text' name='password'>\n<input type='submit' value='Submit'></form>\n</body>\n</html>\n" })
 addFile ({ name = "/var/www/tools/bruteforcer", content = garbage(944).."\n", exec="f_bruteforcer", acl="777" })
 addFile ({ name = "/bin/wget", exec="f_wget", acl="777" })
-mail ({ to="h.buns@HarryBuns-PC", from="m.smith", subject="First Quarter 2017 results!", body="Hello everyone,\nGreat work this past quarter, our revenue grew from past quarter by 25%, our cost of revenue growth did not exceed our revenue growth, which puts us at One entire year of remaining at the same or greater profit margin.\nNet revenue grew 27% to 4.8 Million.\nCongratulations to all the directors for once again leading their team through a successful quarter.\nKeep up the good working moving forward!\n\nSincerely,\nMikeike Smith\nChief Executive Office" })
-mail ({ to="h.buns@HarryBuns-PC", from="b.drinkwater", subject="Re: Password Generator", body="Hi Harry,\nI typically use a script I wrote to generate passwords for all members of our admin team, our systems and for new users. \nThe random passwords are just more secure,and usually people are lazy and pick easy to guess passwords.  You can use the wget command in your /bin/ directory download the script.\nThe script is hosted on my computer at: 10.40.1.110/passwordGen\nRegards,\nBill Drinkwater\nSystem Administrator\nSent from MS Outlook workstation BillDrinkwater-PC"})
+mail ({ to="h.buns@HarryBuns-PC", from="m.smith", subject="First Quarter 2017 results!", body="Hello everyone,\nGreat work this past quarter, our revenue grew from past quarter by 25%, our cost of revenue growth did not exceed our revenue growth, which puts us at One entire year of remaining at the same or greater profit margin.\nNet revenue grew 27% to 4.8 Million.\nCongratulations to all the directors for once again leading their team through a successful quarter.\nKeep up the good working moving forward!\n\nSincerely,\nMikeike Smith\nChief Executive Office\n" })
+mail ({ to="h.buns@HarryBuns-PC", from="b.drinkwater", subject="Re: Password Generator", body="Hi Harry,\nI typically use a script I wrote to generate passwords for all members of our admin team, our systems and for new users. \nThe random passwords are just more secure,and usually people are lazy and pick easy to guess passwords.  You can use the wget command in your /bin/ directory download the script.\nThe script is hosted on my computer at: 10.40.1.110/passwordGen\nRegards,\nBill Drinkwater\nSystem Administrator\nSent from MS Outlook workstation BillDrinkwater-PC\n"})
 
 
 --load Dummy 1
 newVM("dummy1")
 setProperty ({ ip = "10.40.1.40" })
 addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
-addService ({ port = "445", name = "httpd", exec = "", start="true", poll="MS NetBios" })
+addService ({ port = "445", name = "netbios", exec = "", start="true", poll="MS NetBios" })
 addService ({ port = "666", name = "DOOM", exec = "", start="true", poll="Would you like to play game?" })
 
 
@@ -92,13 +92,26 @@ newVM("BillDrinkwater-PC")
 setProperty ({ ip = "10.40.1.110" })
 addUser ("b.drinkwater", "7b93e57034037db559c542f4fa1cde7a")
 addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
-addService ({ port = "80", name = "telnetd", exec = "", start="true", poll="Login:" })
-addFile ({ name = "/home/b.drinkwater/here.txt", content = "Thats it for now.\n", acl="777" })
+addService ({ port = "80", name = "http", exec = "", start="true", poll="Bill's Server!" })
+addFile ({ name = "/home/b.drinkwater/wget", exec="f_wget", acl="777" })
+addFile ({ name = "/home/b.drinkwater/passwordGen", content ="#!/bin/bash\n\nif [ -z $\"1\" ]\n  then\n    echo \"No hostname specified. Usage: passwordGen [hostname]\"\n    exit 1\n  fi\n\necho Password for $1 is:\necho $1 | md5sum | awk '{ print $1 }'\n", acl="777" })
+mail ({ to="b.drinkwater@BillDrinkwater-PC", from="m.smith", subject="First Quarter 2017 results!", body="Hello everyone,\nGreat work this past quarter, our revenue grew from past quarter by 25%, our cost of revenue growth did not exceed our revenue growth, which puts us at One entire year of remaining at the same or greater profit margin.\nNet revenue grew 27% to 4.8 Million.\nCongratulations to all the directors for once again leading their team through a successful quarter.\nKeep up the good working moving forward!\n\nSincerely,\nMikeike Smith\nChief Executive Office\n" })
+mail ({ to="b.drinkwater@BillDrinkwater-PC", from="s.kali", subject="About your password generator", body="Hi Bill,\nI received an email from Harry saying you gave him a password generation script. He wanted to know if it would be of any use to use in cyber ops.\nI took at look at it and I would advise you to please not use the password generator for any system with remote access.\nIt is not secure generation, anyone can use it to try and guess passwords that you have setup with relative ease.\nI can help provide a better script if you want.\n Let me know,\nSam Kali\nDirector Security Operations Center\n"})
+mail ({ to="b.drinkwater@BillDrinkwater-PC", from="s.kali", subject="Re: Website Application Penetration Test", body="Hello Bill,\nMy team has completed the requested security penetration test of your proposed changes to the corporate intranet 'pepecorp.com'\nThere's a couple of security concerns that we need to address that are very serious, but relatively easy to fix and shouldn't take much time.\nI would like you to take the site down even though it is internal facing only until can review and fix the security concerns.\n1. First the website is vulnerable to SQL injections, the user database table is able to be dumped to any visitor who passes the right query.\n2.  Any visitor is able to browse a limited section of the directory structure, including the configuration section.\nLet me know when is best with you so we can review these issues and get them fixed.\nRegards,\nSam Kali\nDirector Security Operations Center\n"})
+
+
+--load pepecorp PC
+newVM("pepecorp.com")
+setProperty ({ ip = "10.40.1.80" })
+addUser ("root", "thispassworddoesntmatterbecuaseyoucantlogintothis")
+addService ({ port = "80", name = "http", exec = "", start="true", poll="Apache Web Server" })
+addService ({ port = "443", name = "https", exec = "", start="true", poll="Apache Web Server with OpenSSL" })
 
 --load Mike Smith's PC
 newVM("MikeSmith-PC")
 setProperty ({ ip = "10.40.1.10" })
-addUser ("m.smith", "ceo")
+addUser ("m.smith", "rarepepe")
+addService ({ port = "23", name = "telnetd", exec = "", start="true", poll="Login:" })
 
 
 
@@ -176,8 +189,49 @@ function f_wget(arg)
     addFile ({ name = path.."passwordGen", content ="#!/bin/bash\n\nif [ -z $\"1\" ]\n  then\n    echo \"No hostname specified. Usage: passwordGen [hostname]\"\n    exit 1\n  fi\n\necho Password for $1 is:\necho $1 | md5sum | awk '{ print $1 }'\n", acl="777" })
     print ("done.")
     return
+  elseif (host == "pepecorp.com/config") then
+    path = cwd()
+    print ("Saving files to " .. path .. "...")
+    echo (" filedownload: ")
+    for i = 1,4 do
+      echo (".")
+      sleep(1)
+    end
+    echo ("\n")
+    addFile ({ name = path.."config", content ="config\n", acl="777" })  
+  elseif (host == "pepecorp.com/';select" and arg[3] == "*" and arg[4] == "from" and arg[5] == "users;") then -- * from users;
+    path = cwd()
+    print ("Saving files to " .. path .. "...")
+    echo (" filedownload: ")
+    for i = 1,4 do
+      echo (".")
+      sleep(1)
+    end
+    echo ("\n")
+    addFile ({ name = path.."database", content ="+-----+---------------------+----------------------------------+--------------+\n| id  | username            | password                         | date created |\n+-----+---------------------+----------------------------------+--------------+\n| 0   | b.drinkwater        | d9ad5d3214c1758caa8942654fac822b | 01/12/2016   |\n| 1   | h.urchiff           | 90180b0d6ce6e56647fe1eabd4d10bf5 | 05/12/2016   |\n| 2   | p.furniture         | 2a02831a4ea3da90e9b3a3c3f570e820 | 05/12/2016   | \n| 3   | a.cahol             | a8b465491d5c1aa9fc8594b599649560 | 05/12/2016   |\n| 4   | h.buns              | 4297af1f6fa6b9cedcb4486d3a5fcc72 | 07/12/2016   |\n| 5   | m.smith             | dd5ca35f1bd14bf72aba7592b4b13ea0 | 01/09/2016   |\n+-----+---------------------+----------------------------------+--------------+\n\n\n", acl="777" })  	
+  elseif (host == "pepecorp.com") then
+    path = cwd()
+    print ("Saving files to " .. path .. "...")
+    echo (" filedownload: ")
+    for i = 1,4 do
+      echo (".")
+      sleep(1)
+    end
+    echo ("\n")
+    addFile ({ name = path.."listings", content ="<html>\n  <h1>Welcome! Server website is not completed yet</h1>\n\n  <ul>\n    <li>config</li>\n    <li>/m.smith/passwordhint</li>\n  <ul>\n</html>\n", acl="777" })
+  elseif (host == "pepecorp.com/m.smith/passwordhint") then
+    path = cwd()
+    print ("Saving files to " .. path .. "...")
+    echo (" filedownload: ")
+    for i = 1,4 do
+      echo (".")
+      sleep(1)
+    end
+    echo ("\n")
+    addFile ({ name = path.."rare", content ="_______!!!!!!!!__!!!!!!\n_________!########!!_!!######!\n________!###########!#########!\n_______!#######!!!###!#########!\n_______!####!!!###!!!#!###!!!!#!\n______!###!!########!!!#!!####!!\n_____!#################!########!!!\n____!#############!!!!!!#####!!!!##!\n____!#########!!!!!###!!!!##!!##!!##!\n___!!#######!!!##########!########!!!\n__!##############!!!!!!!!!##!!!!!!!!!\n!##########!!!!!_!!!!!!!!_!!!!!_!\n!##########!___!_!!!!___!!!_!_!\n!############!_!!!!_!!!!__!!_!!!!!!\n#############!!!!!!!!!###!!!!!!!!###!\n################!#####!############!\n####################!!####!######!!\n##################!!#######!!!!!!!\n################!!##########!#####!\n###################################!\n###################################!\n###################################!\n###########!!!!!!!!!##############!!\n##########!        !!!!!!!!!!!!!!!  !\n#########!  !!!!!!!                 !\n#########!         !!!!!!!!!!!!!!!!!\n##########!!!!!!!!                  !\n##################!!!!!!!!!!!!!!!!!!\n###############################!\n!!###########################!!\n%!!########################!!\n%%%!!!####################!\n%%%%%%!!!###############!!\n%%%%%%%%%!!!!!!!!!!!!!!!%%!\n%%%%%%%%%%%%%%%%%%%%%%%%%%%!!\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%!\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%!\n\n", acl="777" })  
+  else
+    print ("ERROR 404: Not Found.\n")
   end
-  print ("ERROR 404: Not Found.\n")
 end
 
 function ending()
